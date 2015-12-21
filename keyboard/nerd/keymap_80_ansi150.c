@@ -17,17 +17,23 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                    TRNS,     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,            TRNS,       \
                    TRNS,TRNS,TRNS,               FN1,                     TRNS,FN0, TRNS,  TRNS,TRNS,TRNS),
     /* Layer 2: Functions */
-    KEYMAP_ANSI150(SLEP,     MYCM,WSCH,WHOM,MAIL,VOLD,VOLU,MUTE,MSEL,MPLY,MPRV,MNXT,MSTP,  TRNS,TRNS,TRNS,  \
+    KEYMAP_ANSI150(SLEP,     MYCM,WSCH,WHOM,MAIL,VOLD,VOLU,MUTE,MSEL,MPLY,MPRV,MNXT,MSTP,  TRNS,TRNS,TRNS,
                    TRNS,TRNS,TRNS,TRNS,END, TRNS,TRNS,TRNS,TRNS,TRNS,HOME,TRNS,TRNS,TRNS,  TRNS,TRNS,TRNS,  \
-                   TRNS,BTN1,MS_U,BTN3,PSCR,SLCK,TRNS,TRNS,INS, TRNS,TRNS,TRNS,TRNS,FN3,   TRNS,TRNS,TRNS,  \
+                   TRNS,BTN1,MS_U,BTN3,PSCR,SLCK,TRNS,TRNS,INS, TRNS,TRNS,TRNS,FN4 ,FN3,   TRNS,TRNS,TRNS,  \
                    CAPS,MS_L,MS_D,MS_R,PGDN,TRNS,LEFT,DOWN,UP  ,RGHT,TRNS,TRNS,     FN2,                    \
-                   TRNS,     TRNS,DEL, TRNS,TRNS,PGUP,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,            TRNS,       \
-                   TRNS,TRNS,TRNS,               TRNS,                    TRNS,TRNS,TRNS,  TRNS,TRNS,TRNS),
+                   TRNS,     TRNS,DEL, TRNS,TRNS,PGUP,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,            FN5,       \
+                   TRNS,TRNS,TRNS,               TRNS,                    TRNS,TRNS,TRNS,  TRNS,FN6,TRNS),
 };
 
 const uint16_t PROGMEM fn_actions[] = {
     [0] = ACTION_LAYER_MOMENTARY(2),
     [1] = ACTION_LAYER_TAP_KEY(2, KC_SPACE),
     [2] = ACTION_LAYER_TOGGLE(1),
-    [3] = ACTION_BACKLIGHT_LEVEL(BACKLIGHT_SWITCH)
+    [5] = ACTION_BACKLIGHT_INCREASE(), //decrease backlight
+    [6] = ACTION_BACKLIGHT_DECREASE(), // increase backlight
+    //[3] = ACTION_BACKLIGHT_INCREASE(BACKLIGHT_PCB_ID), //decrease backlight
+    //[4] = ACTION_BACKLIGHT_DECREASE(BACKLIGHT_PCB_ID), // increase backlight
+    //[5] = ACTION_BACKLIGHT_INCREASE(BACKLIGHT_SWITCH_ID), //decrease backlight
+    //[6] = ACTION_BACKLIGHT_DECREASE(BACKLIGHT_SWITCH_ID), // increase backlight
 };
+
