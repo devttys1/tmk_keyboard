@@ -116,7 +116,7 @@ void backlight_set(uint8_t level)
         // Set the brightness
         CHANNEL_PCB = 0xFFFF >> ((BACKLIGHT_LEVELS - level) * ((BACKLIGHT_LEVELS + 1) / 2));
     }
-} */
+} 
 
 void backlight_switch_enable()
 {
