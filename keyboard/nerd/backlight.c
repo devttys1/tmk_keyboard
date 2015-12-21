@@ -51,6 +51,7 @@ void led_set(uint8_t usb_led)
     (usb_led & (1<<USB_LED_CAPS_LOCK)) ? backlight_caps_enable() : backlight_caps_disable();
 }
 
+/* 
 //void backlight_switch_set(uint8_t level)
 void backlight_set(uint8_t level)
 {
@@ -83,14 +84,15 @@ void backlight_set(uint8_t level)
         CHANNEL_SWITCH = 0xFFFF >> ((BACKLIGHT_LEVELS - level) * ((BACKLIGHT_LEVELS + 1) / 2));
     }
 }
-/*
-void backlight_pcb_set(uint8_t level)
+*/
+void backlight_set(uint8_t level)
+//void backlight_pcb_set(uint8_t level)
 {
     //(level & BACKLIGHT_SWITCH) ? backlight_switch_enable() : backlight_switch_disable();
     //(level & BACKLIGHT_PCB) ? backlight_pcb_enable() : backlight_pcb_disable();
     if ( level == 0 )
     {
-        // Turn off PWM control on PB7, revert to output low.
+        // Turn off PWM control on PB6, revert to output low.
         TCCR1A &= ~(_BV(COM1B1));
         CHANNEL_PCB = 0x0;
         // Prevent backlight blink on lowest level
