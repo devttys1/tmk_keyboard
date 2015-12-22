@@ -93,28 +93,34 @@ void backlight_set(uint8_t level)
     if ( level == 0 )
     {
         // Turn off PWM control on PB6, revert to output low.
-        TCCR1A &= ~(_BV(COM1B1));
+        TCCR1A &= ~(_BV(COM1C1));
         CHANNEL_PCB = 0x0;
+        CHANNEL_SWITCH = 0x0;
         // Prevent backlight blink on lowest level
         PORTB &= ~(_BV(PORTB6));
+        PORTB &= ~(_BV(PORTB7));
     }
     else if ( level == BACKLIGHT_LEVELS )
     {
         // Prevent backlight blink on lowest level
         PORTB &= ~(_BV(PORTB6));
+        PORTB &= ~(_BV(PORTB7));
         // Turn on PWM control of PB6
-        TCCR1A |= _BV(COM1B1);
+        TCCR1A |= _BV(COM1C1);
         // Set the brightness
         CHANNEL_PCB = 0xFFFF;
+        CHANNEL_SWITCH = 0xFFFF;
     }
     else        
     {
         // Prevent backlight blink on lowest level
         PORTB &= ~(_BV(PORTB6));
+        PORTB &= ~(_BV(PORTB7));
         // Turn on PWM control of PB6
-        TCCR1A |= _BV(COM1B1);
+        TCCR1A |= _BV(COM1C1);
         // Set the brightness
         CHANNEL_PCB = 0xFFFF >> ((BACKLIGHT_LEVELS - level) * ((BACKLIGHT_LEVELS + 1) / 2));
+        CHANNEL_SWITCH = 0xFFFF >> ((BACKLIGHT_LEVELS - level) * ((BACKLIGHT_LEVELS + 1) / 2));
     }
 } 
 
