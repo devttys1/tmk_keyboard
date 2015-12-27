@@ -17,6 +17,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#ifdef BLUETOOTH_ENABLE
+	#ifdef __AVR_ATmega32U4__
+	    #define SERIAL_UART_BAUD       38400 //The default of 115200 won't work with an 8 MHz FCPU
+	    #define SERIAL_UART_DATA       UDR1
+	    #define SERIAL_UART_UBRR       ((F_CPU/(16UL*SERIAL_UART_BAUD))-1)
+	    #define SERIAL_UART_RXD_VECT   USART1_RX_vect
+	    #define SERIAL_UART_TXD_READY  (UCSR1A&(1<<UDRE1))
+	    #define SERIAL_UART_INIT()     do { \
+	        UBRR1L = (uint8_t) SERIAL_UART_UBRR;       /* baud rate */ \
+	        UBRR1H = (uint8_t) (SERIAL_UART_UBRR>>8);  /* baud rate */ \
+	        UCSR1B = (1<<TXEN1);                /* TX: enable */ \
+	        UCSR1C = (0<<UPM11) | (0<<UPM10) | /* parity: none(00), even(01), odd(11) */ \
+	                 (0<<UCSZ12) | (1<<UCSZ11) | (1<<UCSZ10); /* data-8bit(011) */ \
+			sei(); \
+	    } while(0)
+	#else
+	#   error "USART configuration is needed."
+	#endif
+#endif
+
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x6060
