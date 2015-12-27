@@ -43,7 +43,6 @@ TARGET = nerd_lufa
 
 # Directory common source filess exist
 TMK_DIR = ../../tmk_core
-TOP_DIR = ../..
 
 # Directory keyboard dependent files exist
 TARGET_DIR = .
@@ -122,7 +121,6 @@ BLUETOOTH_ENABLE = yes # Enable Bluetooth with the Firmtech FB155BC HID
 # Search Path
 VPATH += $(TARGET_DIR)
 VPATH += $(TMK_DIR)
-VPATH += $(TOP_DIR)
 
 include $(TMK_DIR)/protocol/lufa.mk
 include $(TMK_DIR)/common.mk
