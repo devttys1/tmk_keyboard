@@ -27,7 +27,9 @@ endif
 
 ifdef BLUETOOTH_ENABLE
 	LUFA_SRC += $(LUFA_DIR)/bluetooth.c \
-	$(TMK_DIR)/protocol/serial_uart.c
+	#$(TMK_DIR)/protocol/serial_uart.c \
+	fb155bc/fb155bc.c \
+	fb155bc/fb155bc_task.c
 endif
 
 SRC += $(LUFA_SRC)

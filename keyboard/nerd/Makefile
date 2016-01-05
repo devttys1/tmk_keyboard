@@ -114,7 +114,7 @@ EXTRAKEY_ENABLE = yes	# Audio control and System control(+450)
 CONSOLE_ENABLE = yes	# Console for debug(+400)
 COMMAND_ENABLE = yes    # Commands for debug and configuration
 #SLEEP_LED_ENABLE = yes  # Breathing sleep LED during USB suspend
-#NKRO_ENABLE = yes	# USB Nkey Rollover - not yet supported in LUFA
+NKRO_ENABLE = yes	# USB Nkey Rollover - not yet supported in LUFA
 BACKLIGHT_ENABLE = yes  # Enable keyboard backlight functionality
 BLUETOOTH_ENABLE = yes # Enable Bluetooth with the Firmtech FB155BC HID
 
@@ -122,6 +122,16 @@ BLUETOOTH_ENABLE = yes # Enable Bluetooth with the Firmtech FB155BC HID
 VPATH += $(TARGET_DIR)
 VPATH += $(TMK_DIR)
 
+include fb155bc.mk
+include $(TMK_DIR)/protocol.mk
 include $(TMK_DIR)/protocol/lufa.mk
 include $(TMK_DIR)/common.mk
 include $(TMK_DIR)/rules.mk
+
+
+debug-on: EXTRAFLAGS += -DDEBUG -DDEBUG_ACTION
+debug-on: all
+
+debug-off: EXTRAFLAGS += -DNO_DEBUG -DNO_PRINT
+debug-off: OPT_DEFS := $(filter-out -DCONSOLE_ENABLE,$(OPT_DEFS))
+debug-off: all

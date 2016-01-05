@@ -58,6 +58,7 @@
 
 #ifdef BLUETOOTH_ENABLE
     #include "bluetooth.h"
+    #include "fb155bc_task.h"
 #endif
 
 uint8_t keyboard_idle = 0;
@@ -448,8 +449,8 @@ static uint8_t keyboard_leds(void)
 
 static void send_keyboard(report_keyboard_t *report)
 {
-
-#ifdef BLUETOOTH_ENABLE
+#if 0
+//#ifdef BLUETOOTH_ENABLE
     serial_send(0x0c);  // Length of packet in bytes
     serial_send(0x00);     // Type of packet: Forward HID Report
     serial_send(0xa1);     // HID input Report Header
@@ -467,6 +468,7 @@ static void send_keyboard(report_keyboard_t *report)
     for (uint8_t i = 0; i < KEYBOARD_EPSIZE; i++) {
         bluefruit_serial_send(report->raw[i]);
     } */
+
 #endif
 
     uint8_t timeout = 255;
@@ -511,7 +513,8 @@ static void send_mouse(report_mouse_t *report)
 {
 #ifdef MOUSE_ENABLE
 
-#ifdef BLUETOOTH_ENABLE
+#if 0
+//#ifdef BLUETOOTH_ENABLE
     serial_send(0x08); // Length of packet in bytes
     serial_send(0x00); // Type of packet: Forward HID Report
     serial_send(0xa1); //HID input Report Header
@@ -566,7 +569,8 @@ static void send_system(uint16_t data)
 static void send_consumer(uint16_t data) //TODO: figure out this stuff
 {
 
-#ifdef BLUETOOTH_ENABLE
+#if 0
+//#ifdef BLUETOOTH_ENABLE
     static uint16_t last_data = 0;
     if (data == last_data) return;
     last_data = data;
@@ -599,7 +603,9 @@ static void send_consumer(uint16_t data) //TODO: figure out this stuff
 
     Endpoint_Write_Stream_LE(&r, sizeof(report_extra_t), NULL);
     Endpoint_ClearIN();
-}
+} 
+
+
 //Check these methods if they might work
 /* 
 static uint16_t usage2bits(uint16_t usage)
@@ -940,6 +946,11 @@ int main(void)
 #endif
 
 #ifdef BLUETOOTH_ENABLE
+    #if 0
+    fb155bc_init();
+    fb155bc_task_init();
+    print("FB155BC-HID init\n");
+    
     serial_init();
     // wait for keyboard to boot up and receive command
     DDRD   = 0b01001000;//_BV(PD6);
@@ -982,7 +993,7 @@ int main(void)
         serial_send(ble_enable[i]);
     }
     _delay_ms(1000);
-
+    #endif
 #endif
 
     /* wait for USB startup & debug output */
